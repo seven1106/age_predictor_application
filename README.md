@@ -1,6 +1,5 @@
-# age_predictor_application
 
-# Age Predictor App
+# Age Predictor Application
 
 This is a Python application that predicts the age of a person from an image or video using deep learning models. The application has a graphical user interface (GUI) built using the Tkinter library.
 
@@ -82,18 +81,6 @@ This application uses the following libraries:
 - PIL (Python Imaging Library): https://pillow.readthedocs.io/
 - imutils: https://github.com/jrosebr1/imutils
 - tkinter: https://docs.python.org/3/library/tk
-
-## Acknowledgements
-
-The Age Predictor App would like to acknowledge the following individuals and resources:
-
-- The OpenAI team for developing and providing access to the GPT-3.5 language model, which powers the conversational capabilities of this application.
-- The developers and contributors of the programming libraries and frameworks used in this project, including Python, Flask, and scikit-learn, for their valuable tools and documentation.
-- The online developer community for their continuous support, knowledge sharing, and troubleshooting assistance.
-- The users and testers who provided feedback, suggestions, and bug reports to help improve the functionality and user experience of the Age Predictor App.
-- Any other individuals or resources that have contributed to the development and success of this project.
-
-We are grateful for the contributions of these individuals and the availability of these resources, which have played a significant role in the creation of this application.
 
 ## Limitations
 
