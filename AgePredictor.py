@@ -9,7 +9,6 @@ from PIL import ImageTk, Image
 import datetime
 import tkinter as tk
 from tkinter import filedialog
-from tkVideoPlayer import TkinterVideo
 import imutils
 from imutils.video import VideoStream
 
