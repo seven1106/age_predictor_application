@@ -1,0 +1,11 @@
+opencv-python
+numpy
+PIL
+imutils
+tkinter
+customtkinter
+os
+
+
+
+

@@ -93,24 +93,27 @@ class App(customtkinter.CTk):
         self.panelA = None
         self.image_frame = customtkinter.CTkFrame(
             self.home_frame, corner_radius=0.5, border_color="black")
-        self.image_frame.pack(expand=True, fill="both", padx=40, pady=10)
+        self.image_frame.pack(expand=True, fill="both", padx=30, pady=10)
 
+        
         # frame for Buttons
         self.butframe = customtkinter.CTkFrame(
             self.home_frame, fg_color="transparent")
         self.butframe.pack(pady=30)
         self.home_frame_button = customtkinter.CTkButton(
             self.butframe, text="Open", command=self.open_img, height=40, width=100)
-        self.home_frame_button.grid(row=0, column=0,  padx=5)
+        self.home_frame_button.pack(expand=True, side="left", padx=5)
 
         self.home_frame_button1 = customtkinter.CTkButton(
             self.butframe, text="Predict", command=self.img_pred,  height=40, width=100)
-        self.home_frame_button1.grid(row=0, column=1, padx=5)
+        self.home_frame_button1.pack(expand=True, side="left", padx=5)
 
         self.home_frame_button2 = customtkinter.CTkButton(
             self.butframe, text="Save", command=self.img_save, height=40, width=100)
-        self.home_frame_button2.grid(row=0, column=2,  padx=5)
-
+        self.home_frame_button2.pack(expand=True, side="left", padx=5)
+        self.label_predict = customtkinter.CTkLabel(
+            self.home_frame, text="")
+        self.label_predict.pack(side="right", padx=10)
 # create second frame
         self.second_frame = customtkinter.CTkFrame(
             self, corner_radius=0, fg_color="transparent")
@@ -134,6 +137,9 @@ class App(customtkinter.CTk):
         self.snap_btn_vid = customtkinter.CTkButton(
             self.btn_second_frame, text="Take Snapshot", command=self.takeSnapshot, height=40, width=100)
         self.snap_btn_vid.pack(expand=True, side="left", padx=5)
+        self.label_total_frames = customtkinter.CTkLabel(
+            self.second_frame, text="")
+        self.label_total_frames.pack(side="right")
         self.vs = None
 
 
@@ -219,6 +225,7 @@ class App(customtkinter.CTk):
             self.panelA.configure(image=img)
             self.panelA.image = img
             self.panelB.configure(image="")
+            self.label_predict.configure(text="")
 
     def img_pred(self):
         try:
@@ -250,9 +257,7 @@ class App(customtkinter.CTk):
                     age = self.AGE_BUCKETS[index]
                     ageConfidence = preds[0][index]
                     text = "{}: {:.2f}%".format(age, ageConfidence * 100)
-                    self.label_predict = customtkinter.CTkLabel(
-                        self.home_frame, text="[INFO] Age between: {}, Accuracy {:.2f}%".format(age, ageConfidence * 100))
-                    self.label_predict.pack(side="right", padx=10)
+
                     y = startY - 10 if startY - 10 > 10 else startY + 10
                     cv2.rectangle(image, (startX, startY),
                                   (endX, endY), (0, 0, 255), 2)
@@ -267,6 +272,8 @@ class App(customtkinter.CTk):
             self.panelB.grid(row=1, column=1, sticky="e")
             self.panelB.configure(image=image)
             self.panelB.image = image
+            self.label_predict.configure(text="[INFO] Age between: {}, Accuracy {:.2f}%".format(age, ageConfidence * 100))
+            
         except:
             messagebox.showerror("Error", "No photos to predict")
 
@@ -291,9 +298,7 @@ class App(customtkinter.CTk):
             try:
                 prop = cv2.cv.CV_CAP_PROP_FRAME_COUNT if imutils.is_cv2() else cv2.CAP_PROP_FRAME_COUNT
                 total = int(vs.get(prop))
-                self.label_total_frames = customtkinter.CTkLabel(
-                    self.second_frame, text="Total Frames: {} \nPlease wait for rendering...".format(total))
-                self.label_total_frames.pack(side="right")
+                self.label_total_frames.configure(text="Total Frames: {} \nPlease wait for rendering...".format(total))
 
             except:
                 messagebox.showinfo(
@@ -340,6 +345,8 @@ class App(customtkinter.CTk):
 
             messagebox.showinfo(
                 "Success", "Predicted video saved at:\n{}".format(writer_path))
+            self.label_total_frames.configure(text=" ")
+            
         except:
             messagebox.showerror("Error", "No video to save")
 
