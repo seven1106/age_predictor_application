@@ -1,4 +1,3 @@
-
 # Age Predictor Application
 
 This is a Python application that predicts the age of a person from an image or video using deep learning models. The application has a graphical user interface (GUI) built using the Tkinter library.
@@ -99,3 +98,5 @@ The Age Predictor App has a few limitations that should be noted:
 6. Legal and Ethical Considerations: The app should be used responsibly, following applicable laws and ethical guidelines. It is essential to be mindful of the potential impact of the predictions and to avoid using the app for any malicious or harmful purposes.
 
 Please keep these limitations in mind when using the Age Predictor App, and understand that the predictions should be taken as estimates rather than definitive statements.
+
+# Verry easy to use!

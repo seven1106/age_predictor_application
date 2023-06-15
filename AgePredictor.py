@@ -17,7 +17,8 @@ class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.geometry("1400x650")
-        self.title("")
+        self.title("Age Predictor App")
+        self.iconbitmap('test_images/seven1106.ico') 
 
         self.resizable(width=True, height=True)
         self.file_path = None
@@ -30,10 +31,10 @@ class App(customtkinter.CTk):
         image_path = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "test_images")
         self.logo_image = customtkinter.CTkImage(Image.open(os.path.join(
-            image_path, "icy.png")), size=(26, 26))
+            image_path, "seven1106.ico")), size=(27, 27))
 
 
-        self.home_image = customtkinter.CTkImage(
+        self.image_image = customtkinter.CTkImage(
                                                  dark_image=Image.open(os.path.join(image_path, "image.png")), size=(20, 20))
         self.chat_image = customtkinter.CTkImage(
                                                  dark_image=Image.open(os.path.join(image_path, "video.png")), size=(20, 20))
@@ -64,140 +65,140 @@ class App(customtkinter.CTk):
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
-        self.home_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Image",
+        self.image_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Image",
                                                    fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                   image=self.home_image, anchor="w", command=self.home_button_event)
-        self.home_button.grid(row=1, column=0, sticky="ew")
+                                                   image=self.image_image, anchor="w", command=self.image_button_event)
+        self.image_button.grid(row=1, column=0, sticky="ew")
 
-        self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Video",
+        self.vid_frame_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Video",
                                                       fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                      image=self.chat_image, anchor="w", command=self.frame_2_button_event)
-        self.frame_2_button.grid(row=2, column=0, sticky="ew")
+                                                      image=self.chat_image, anchor="w", command=self.vid_frame_button_event)
+        self.vid_frame_button.grid(row=2, column=0, sticky="ew")
 
-        self.frame_3_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Real time",
+        self.rtime_frame_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Real time",
                                                       fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                      image=self.add_user_image, anchor="w", command=self.frame_3_button_event)
-        self.frame_3_button.grid(row=3, column=0, sticky="ew")
+                                                      image=self.add_user_image, anchor="w", command=self.rtime_frame_button_event)
+        self.rtime_frame_button.grid(row=3, column=0, sticky="ew")
 
-        self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame, values=["Light", "Dark", "System"],
+        self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame, values=["Dark", "Light", "System"],
                                                                 command=self.change_appearance_mode_event)
         self.appearance_mode_menu.grid(
             row=6, column=0, padx=20, pady=20, sticky="s")
 
-# create home frame
-        self.home_frame = customtkinter.CTkFrame(
-            self, corner_radius=0, fg_color="transparent")
-        self.home_frame.grid_columnconfigure(0, weight=1)
-
-        self.panelB = None
-        self.panelA = None
+# create image frame
         self.image_frame = customtkinter.CTkFrame(
-            self.home_frame, corner_radius=0.5, border_color="black")
-        self.image_frame.pack(expand=True, fill="both", padx=30, pady=10)
+            self, corner_radius=0, fg_color="transparent")
+        self.image_frame.grid_columnconfigure(0, weight=1)
+
+        self.img_frame_label = customtkinter.CTkFrame(
+            self.image_frame, corner_radius=0.5, border_color="black")
+        self.img_frame_label.pack(expand=True, fill="both", padx=30, pady=10)
 
         
         # frame for Buttons
         self.butframe = customtkinter.CTkFrame(
-            self.home_frame, fg_color="transparent")
+            self.image_frame, fg_color="transparent")
         self.butframe.pack(pady=30)
-        self.home_frame_button = customtkinter.CTkButton(
+        self.image_frame_button = customtkinter.CTkButton(
             self.butframe, text="Open", command=self.open_img, height=40, width=100)
-        self.home_frame_button.pack(expand=True, side="left", padx=5)
+        self.image_frame_button.pack(expand=True, side="left", padx=5)
 
-        self.home_frame_button1 = customtkinter.CTkButton(
+        self.image_frame_button1 = customtkinter.CTkButton(
             self.butframe, text="Predict", command=self.img_pred,  height=40, width=100)
-        self.home_frame_button1.pack(expand=True, side="left", padx=5)
+        self.image_frame_button1.pack(expand=True, side="left", padx=5)
 
-        self.home_frame_button2 = customtkinter.CTkButton(
+        self.image_frame_button2 = customtkinter.CTkButton(
             self.butframe, text="Save", command=self.img_save, height=40, width=100)
-        self.home_frame_button2.pack(expand=True, side="left", padx=5)
+        self.image_frame_button2.pack(expand=True, side="left", padx=5)
         self.label_predict = customtkinter.CTkLabel(
-            self.home_frame, text="")
+            self.image_frame, text="")
         self.label_predict.pack(side="right", padx=10)
-# create second frame
-        self.second_frame = customtkinter.CTkFrame(
+        self.panelB = None
+        self.panelA = None
+# create video frame
+        self.video_frame = customtkinter.CTkFrame(
             self, corner_radius=0, fg_color="transparent")
 
         self.vid_player = tk.Label(
-            self.second_frame, bg="black")
+            self.video_frame, bg="black")
         self.vid_player.pack(expand=True, fill="both", padx=40, pady=10)
 
-        self.btn_second_frame = customtkinter.CTkFrame(
-            self.second_frame, corner_radius=0.5, fg_color="transparent")
-        self.btn_second_frame.pack(pady=30)
+        self.btn_video_frame = customtkinter.CTkFrame(
+            self.video_frame, corner_radius=0.5, fg_color="transparent")
+        self.btn_video_frame.pack(pady=30)
         self.predict_vid_btn = customtkinter.CTkButton(
-            self.btn_second_frame, text="Load video and Predict", command=self.handle_frame_vid, height=40, width=100)
+            self.btn_video_frame, text="Load video and Predict", command=self.handle_frame_vid, height=40, width=100)
         self.predict_vid_btn.pack(side="left", padx=5)
         self.play_pause_btn = customtkinter.CTkButton(
-            self.btn_second_frame, text="Stop", command=self.pause, height=40, width=100)
+            self.btn_video_frame, text="Stop", command=self.pause, height=40, width=100)
         self.play_pause_btn.pack(side="left", padx=5)
         self.save_vid_btn = customtkinter.CTkButton(
-            self.btn_second_frame, text="Save", command=self.save_vid, height=40, width=100)
+            self.btn_video_frame, text="Save", command=self.save_vid, height=40, width=100)
         self.save_vid_btn.pack(side="left", padx=5)
         self.snap_btn_vid = customtkinter.CTkButton(
-            self.btn_second_frame, text="Take Snapshot", command=self.takeSnapshot, height=40, width=100)
+            self.btn_video_frame, text="Take Snapshot", command=self.takeSnapshot, height=40, width=100)
         self.snap_btn_vid.pack(expand=True, side="left", padx=5)
         self.label_total_frames = customtkinter.CTkLabel(
-            self.second_frame, text="")
+            self.video_frame, text="")
         self.label_total_frames.pack(side="right")
         self.vs = None
 
 
-# create third frame
-        self.third_frame = customtkinter.CTkFrame(
+# create rtime frame
+        self.rtime_frame = customtkinter.CTkFrame(
             self, corner_radius=0, fg_color="transparent")
-        self.btn_third_frame = customtkinter.CTkFrame(
-            self.third_frame, corner_radius=0.5, fg_color="transparent")
-        self.btn_third_frame.pack(side="bottom", pady=30)
+        self.btn_rtime_frame = customtkinter.CTkFrame(
+            self.rtime_frame, corner_radius=0.5, fg_color="transparent")
+        self.btn_rtime_frame.pack(side="bottom", pady=30)
 
-        self.live_label = tk.Label(self.third_frame, bg="black")
+        self.live_label = tk.Label(self.rtime_frame, bg="black")
         self.live_label.pack(expand=True, fill=tk.BOTH, padx=40, pady=10)
 
         self.live_btn = customtkinter.CTkButton(
-            self.btn_third_frame, text="Predict in Webcam", command=self.webcam_pred, height=40, width=100)
+            self.btn_rtime_frame, text="Predict in Webcam", command=self.webcam_pred, height=40, width=100)
         self.live_btn.pack(expand=True, side="left", padx=5)
 
         self.stop_btn = customtkinter.CTkButton(
-            self.btn_third_frame, text="Stop", command=self.cam_stop, height=40, width=100)
+            self.btn_rtime_frame, text="Stop", command=self.cam_stop, height=40, width=100)
         self.stop_btn.pack(expand=True, side="left", padx=5)
         self.snap_btn = customtkinter.CTkButton(
-            self.btn_third_frame, text="Take Snapshot", command=self.takeSnapshot, height=40, width=100)
+            self.btn_rtime_frame, text="Take Snapshot", command=self.takeSnapshot, height=40, width=100)
         self.snap_btn.pack(expand=True, side="left", padx=5)
         self.cap = None
-        self.select_frame_by_name("home")
+        self.select_frame_by_name("image")
     # frame api
 
     def select_frame_by_name(self, name):
         # set button color for selected button
-        self.home_button.configure(
-            fg_color=("gray75", "gray25") if name == "home" else "transparent")
-        self.frame_2_button.configure(
-            fg_color=("gray75", "gray25") if name == "frame_2" else "transparent")
-        self.frame_3_button.configure(
-            fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
+        self.image_button.configure(
+            fg_color=("gray75", "gray25") if name == "image" else "transparent")
+        self.vid_frame_button.configure(
+            fg_color=("gray75", "gray25") if name == "vid_frame" else "transparent")
+        self.rtime_frame_button.configure(
+            fg_color=("gray75", "gray25") if name == "rtime_frame" else "transparent")
 
         # show selected frame
-        if name == "home":
-            self.home_frame.grid(row=0, column=1, sticky="nsew")
+        if name == "image":
+            self.image_frame.grid(row=0, column=1, sticky="nsew")
         else:
-            self.home_frame.grid_forget()
-        if name == "frame_2":
-            self.second_frame.grid(row=0, column=1, sticky="nsew")
+            self.image_frame.grid_forget()
+        if name == "vid_frame":
+            self.video_frame.grid(row=0, column=1, sticky="nsew")
         else:
-            self.second_frame.grid_forget()
-        if name == "frame_3":
-            self.third_frame.grid(row=0, column=1, sticky="nsew")
+            self.video_frame.grid_forget()
+        if name == "rtime_frame":
+            self.rtime_frame.grid(row=0, column=1, sticky="nsew")
         else:
-            self.third_frame.grid_forget()
+            self.rtime_frame.grid_forget()
 
-    def home_button_event(self):
-        self.select_frame_by_name("home")
+    def image_button_event(self):
+        self.select_frame_by_name("image")
 
-    def frame_2_button_event(self):
-        self.select_frame_by_name("frame_2")
+    def vid_frame_button_event(self):
+        self.select_frame_by_name("vid_frame")
 
-    def frame_3_button_event(self):
-        self.select_frame_by_name("frame_3")
+    def rtime_frame_button_event(self):
+        self.select_frame_by_name("rtime_frame")
 
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
@@ -211,14 +212,14 @@ class App(customtkinter.CTk):
         x = filedialog.askopenfilename()
 
         img = cv2.imread(x)
-        img = cv2.resize(img, (600, 400))
+        img = cv2.resize(img, (750, 550))
         img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
 
         eimg = img
         img = ImageTk.PhotoImage(img)
 
         if self.panelA is None:
-            self.panelA = Label(self.image_frame, image=img)
+            self.panelA = Label(self.img_frame_label, image=img)
             self.panelA.image = img
             self.panelA.grid(row=1, column=0, sticky="w", padx=10)
         else:
@@ -263,11 +264,11 @@ class App(customtkinter.CTk):
                                   (endX, endY), (0, 0, 255), 2)
                     cv2.putText(image, text, (startX, y),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
-            image = cv2.resize(image, (600, 400))
+            image = cv2.resize(image, (750, 550))
             image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
             eimg = image
             image = ImageTk.PhotoImage(image)
-            self.panelB = Label(self.image_frame, image=image)
+            self.panelB = Label(self.img_frame_label, image=image)
             self.panelB.image = image
             self.panelB.grid(row=1, column=1, sticky="e")
             self.panelB.configure(image=image)
