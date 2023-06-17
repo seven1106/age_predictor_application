@@ -1,5 +1,5 @@
 import time
-from tkinter import messagebox
+from tkinter import messagebox, font
 import customtkinter
 from tkinter import *
 import os
@@ -93,8 +93,11 @@ class App(customtkinter.CTk):
         self.img_frame_label = customtkinter.CTkFrame(
             self.image_frame, corner_radius=0.5, border_color="black")
         self.img_frame_label.pack(expand=True, fill="both", padx=30, pady=10)
-
-        
+        self.text_frame = customtkinter.CTkFrame(
+            self.img_frame_label, corner_radius=0.5, border_color="black")
+        self.text_frame.pack(side="bottom", fill="x", pady=10, padx=10)
+        self.label_name = Label(self.text_frame, text=" ", bg="gray25", fg="white")
+        self.label_name.grid(row=0, column=0, padx=10, pady=10)
         # frame for Buttons
         self.butframe = customtkinter.CTkFrame(
             self.image_frame, fg_color="transparent")
@@ -221,12 +224,15 @@ class App(customtkinter.CTk):
         if self.panelA is None:
             self.panelA = Label(self.img_frame_label, image=img)
             self.panelA.image = img
-            self.panelA.grid(row=1, column=0, sticky="w", padx=10)
+            self.panelA.pack(side="left", padx=10, pady=10)
         else:
             self.panelA.configure(image=img)
             self.panelA.image = img
-            self.panelB.configure(image="")
-            self.label_predict.configure(text="")
+            self.panelB.pack_forget()
+            for widget in self.text_frame.winfo_children():
+                if isinstance(widget, Label):
+                    widget.configure(text="")
+
 
     def img_pred(self):
         try:
@@ -238,14 +244,16 @@ class App(customtkinter.CTk):
                 image, 1.0, (300, 300), (104.0, 177.0, 123.0))
 
             self.faceNet.setInput(blob)
-            detections = self.faceNet.forward()
-
+            self.detections = self.faceNet.forward()
+            
+            custom_font = font.Font(size=14)
+            
             # Process the detections and display the result
-            for i in range(0, detections.shape[2]):
-                confidence = detections[0, 0, i, 2]
+            for i in range(0, self.detections.shape[2]):
+                confidence = self.detections[0, 0, i, 2]
 
                 if confidence > 0.5:
-                    box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+                    box = self.detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                     (startX, startY, endX, endY) = box.astype("int")
                     face = image[startY:endY, startX:endX]
                     faceBlob = cv2.dnn.blobFromImage(
@@ -257,23 +265,31 @@ class App(customtkinter.CTk):
                     index = preds[0].argmax()
                     age = self.AGE_BUCKETS[index]
                     ageConfidence = preds[0][index]
-                    text = "{}: {:.2f}%".format(age, ageConfidence * 100)
+                    text = "[{}] {}: {:.2f}%".format(i+1, age, ageConfidence * 100)
 
                     y = startY - 10 if startY - 10 > 10 else startY + 10
                     cv2.rectangle(image, (startX, startY),
                                   (endX, endY), (0, 0, 255), 2)
                     cv2.putText(image, text, (startX, y),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+                    self.label_name = "label_{}".format(i)
+                    
+                    if i < 12:  
+                        self.label_name = Label(self.text_frame, text=text, font=custom_font, bg="gray25", fg="white")
+                        self.label_name.grid(row=0, column=i, padx=10, pady=10)
+                    else:
+                        self.label_name = Label(self.text_frame, text=text, font=custom_font, bg="gray25", fg="white")
+                        self.label_name.grid(row=1, column=i-12, padx=10, pady=10)
+                    
             image = cv2.resize(image, (750, 550))
             image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
             eimg = image
             image = ImageTk.PhotoImage(image)
             self.panelB = Label(self.img_frame_label, image=image)
             self.panelB.image = image
-            self.panelB.grid(row=1, column=1, sticky="e")
+            self.panelB.pack(side="left", padx=10, pady=10)
             self.panelB.configure(image=image)
             self.panelB.image = image
-            self.label_predict.configure(text="[INFO] Age between: {}, Accuracy {:.2f}%".format(age, ageConfidence * 100))
             
         except:
             messagebox.showerror("Error", "No photos to predict")
@@ -347,7 +363,7 @@ class App(customtkinter.CTk):
             messagebox.showinfo(
                 "Success", "Predicted video saved at:\n{}".format(writer_path))
             self.label_total_frames.configure(text=" ")
-            
+            self.label_total_frames.configure(text="")
         except:
             messagebox.showerror("Error", "No video to save")
 
