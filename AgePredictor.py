@@ -156,7 +156,9 @@ class App(customtkinter.CTk):
 
         self.live_label = tk.Label(self.rtime_frame, bg="black")
         self.live_label.pack(expand=True, fill=tk.BOTH, padx=40, pady=10)
-
+        self.text_live = customtkinter.CTkLabel(
+            self.rtime_frame, text="Live Prediction")
+        self.text_live.pack(side="bottom", padx=10)
         self.live_btn = customtkinter.CTkButton(
             self.btn_rtime_frame, text="Predict in Webcam", command=self.webcam_pred, height=40, width=100)
         self.live_btn.pack(expand=True, side="left", padx=5)
@@ -485,6 +487,8 @@ class App(customtkinter.CTk):
                                   (endX, endY), (0, 0, 255), 2)
                     cv2.putText(frame, text, (startX, y),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
+                    self.text_live.configure(text=text)
+                    
                 self.snap = frame
                 frame = cv2.resize(frame, (1000, 600))
                 img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
