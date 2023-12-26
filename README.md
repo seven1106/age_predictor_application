@@ -1,3 +1,6 @@
+# Đề tài xây dựng ứng dụng nhận diện độ tuổi con người bằng SVM, CNN
+
+
 # Age Predictor Application
 
 This is a Python application that predicts the age of a person from an image or video using deep learning models. The application has a graphical user interface (GUI) built using the Tkinter library.
